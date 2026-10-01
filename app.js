@@ -233,7 +233,9 @@ function formatBody(value = "") {
 }
 
 function structuredArticle(article) {
-  const sections = Array.isArray(article.sections) ? article.sections : [];
+  const sections = Array.isArray(article.sections)
+    ? article.sections.filter((section) => section.photo || section.title || section.body || section.quote)
+    : [];
   if (!sections.length) return "";
   return `<div class="article-reader" lang="zh-Hant">
     <div class="article-body">${sections.map((section, index) => {
@@ -414,6 +416,7 @@ function setupSectionReader() {
 
   previous.disabled = true;
   next.disabled = sections.length === 1;
+  sections[0].classList.add("is-visible");
   previous.addEventListener("click", () => showSection(current - 1, -1));
   next.addEventListener("click", () => showSection(current + 1, 1));
   reader.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
