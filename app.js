@@ -51,7 +51,7 @@ const palette = [
   ["#8c6843", "#eeddbf"], ["#365d72", "#c9dde2"], ["#6e3e49", "#e8c5ca"]
 ];
 
-const places = days.flatMap((group) =>
+let places = days.flatMap((group) =>
   group.places.map(([name, type]) => ({ day: group.day, city: group.city, name, type }))
 );
 
@@ -234,10 +234,12 @@ function formatBody(value = "") {
 
 function structuredArticle(article) {
   const sections = Array.isArray(article.sections) ? article.sections : [];
-  return `<div class="article-body" lang="zh-Hant">${sections.map((section, index) => {
+  if (!sections.length) return "";
+  return `<div class="article-reader" lang="zh-Hant">
+    <div class="article-body">${sections.map((section, index) => {
     const hasCopy = Boolean(section.title || section.body || section.quote);
     return `
-    <section class="article-section${hasCopy ? "" : " infographic-only"}">
+    <section class="article-section${hasCopy ? "" : " infographic-only"}${index === 0 ? " is-active" : ""}" aria-hidden="${index === 0 ? "false" : "true"}">
       ${section.photo ? `<figure class="section-photo"><img src="${escapeHtml(section.photo)}" alt="${escapeHtml(section.photoAlt || section.title)}" loading="lazy"></figure>` : ""}
       ${hasCopy ? `<div class="section-copy">
         <p class="section-index">${String(index + 1).padStart(2, "0")}</p>
@@ -246,7 +248,13 @@ function structuredArticle(article) {
         ${section.quote ? `<blockquote class="article-callout">${formatInline(section.quote)}</blockquote>` : ""}
       </div>` : ""}
     </section>`;
-  }).join("")}</div>`;
+  }).join("")}</div>
+    <nav class="section-navigation" aria-label="Story sections">
+      <button class="section-nav-button" type="button" data-section-nav="previous" aria-label="Previous section">← <span>Previous</span></button>
+      <p class="section-progress"><strong>1</strong> / ${sections.length}</p>
+      <button class="section-nav-button" type="button" data-section-nav="next" aria-label="Next section"><span>Next</span> →</button>
+    </nav>
+  </div>`;
 }
 
 async function loadEditedContent() {
@@ -257,6 +265,9 @@ async function loadEditedContent() {
     articles = { ...builtInArticles };
     Object.entries(edited).forEach(([name, article]) => {
       articles[name] = { ...article, content: structuredArticle(article) };
+      if (!places.some((place) => place.name === name) && article.meta) {
+        places.push({ name, day: Number(article.meta.day) || 1, city: article.meta.city || "Spain", type: article.meta.type || "Place" });
+      }
     });
   } catch (error) {
     console.info("Using the built-in guide content.", error);
@@ -312,7 +323,8 @@ function showLogin() {
 }
 
 function render() {
-  dayFilter.innerHTML = ["All", ...days.map(({ day }) => day)]
+  const availableDays = [...new Set(places.map(({ day }) => day))].sort((a, b) => a - b);
+  dayFilter.innerHTML = ["All", ...availableDays]
     .map((day) => `<button type="button" class="${day === activeDay ? "is-active" : ""}" data-day="${day}">${day === "All" ? "All places" : `Day ${day}`}</button>`)
     .join("");
 
@@ -368,9 +380,53 @@ function openPlace(index) {
   guideHome.classList.add("is-hidden");
   placePage.classList.remove("is-hidden");
   setupRevealAnimations();
+  setupSectionReader();
   window.scrollTo(0, 0);
   const nextHash = `#place-${index + 1}`;
   if (window.location.hash !== nextHash) history.pushState({ place: index }, "", nextHash);
+}
+
+function setupSectionReader() {
+  const reader = $(".article-reader");
+  if (!reader) return;
+  const sections = [...reader.querySelectorAll(".article-section")];
+  if (!sections.length) return;
+  let current = 0;
+  let touchStartX = 0;
+  const progress = reader.querySelector(".section-progress strong");
+  const previous = reader.querySelector("[data-section-nav='previous']");
+  const next = reader.querySelector("[data-section-nav='next']");
+
+  function showSection(index, direction = 1) {
+    if (index < 0 || index >= sections.length || index === current) return;
+    const outgoing = sections[current];
+    const incoming = sections[index];
+    outgoing.className = outgoing.className.replace(/\s(is-active|slide-in-left|slide-in-right)/g, "");
+    outgoing.setAttribute("aria-hidden", "true");
+    current = index;
+    incoming.classList.add("is-active", "is-visible", direction > 0 ? "slide-in-right" : "slide-in-left");
+    incoming.setAttribute("aria-hidden", "false");
+    progress.textContent = String(current + 1);
+    previous.disabled = current === 0;
+    next.disabled = current === sections.length - 1;
+    reader.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  previous.disabled = true;
+  next.disabled = sections.length === 1;
+  previous.addEventListener("click", () => showSection(current - 1, -1));
+  next.addEventListener("click", () => showSection(current + 1, 1));
+  reader.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+  reader.addEventListener("touchend", (event) => {
+    const distance = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(distance) < 55) return;
+    showSection(current + (distance < 0 ? 1 : -1), distance < 0 ? 1 : -1);
+  }, { passive: true });
+  reader.tabIndex = 0;
+  reader.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") showSection(current + 1, 1);
+    if (event.key === "ArrowLeft") showSection(current - 1, -1);
+  });
 }
 
 function setupRevealAnimations() {

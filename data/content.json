@@ -1,6 +1,7 @@
 {
   "Temple of Debod": {
     "title": "德波神廟",
+    "meta": { "day": 1, "city": "Madrid", "type": "Monument" },
     "introduction": "德波神廟（Temple of Debod／Templo de Debod）是一座非常特別的古埃及神廟。今天它位於西班牙馬德里，但它的靈魂與起源，卻來自遙遠的尼羅河流域。它不只是浪漫的日落景點，更是一座跨越文明、政治、考古與藝術的歷史紀念碑。",
     "cover": "./assets/places/Temple%20of%20Debod/temple-of-debod-cover.jpg",
     "sections": [
@@ -44,6 +45,7 @@
   },
   "Lhardy Restaurante": {
     "title": "Lhardy Restaurante",
+    "meta": { "day": 1, "city": "Madrid", "type": "Restaurant" },
     "introduction": "Lhardy Restaurante 是馬德里最具歷史感與代表性的餐廳之一。這裡不只是一間餐廳，也像是一座保存城市記憶的歷史空間，讓人透過味覺、裝潢與服務方式，感受老馬德里的優雅氣氛。",
     "cover": "./assets/places/Lhardy%20Restaurante/cover.jpg",
     "sections": [
