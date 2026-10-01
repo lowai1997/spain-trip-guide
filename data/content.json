@@ -1,0 +1,88 @@
+{
+  "Temple of Debod": {
+    "title": "德波神廟",
+    "introduction": "德波神廟（Temple of Debod／Templo de Debod）是一座非常特別的古埃及神廟。今天它位於西班牙馬德里，但它的靈魂與起源，卻來自遙遠的尼羅河流域。它不只是浪漫的日落景點，更是一座跨越文明、政治、考古與藝術的歷史紀念碑。",
+    "cover": "./assets/places/Temple%20of%20Debod/temple-of-debod-cover.jpg",
+    "sections": [
+      {
+        "title": "",
+        "body": "",
+        "quote": "",
+        "photo": "./assets/places/Temple%20of%20Debod/section1.png"
+      },
+      {
+        "title": "",
+        "body": "",
+        "quote": "",
+        "photo": "./assets/places/Temple%20of%20Debod/section2.png"
+      },
+      {
+        "title": "",
+        "body": "",
+        "quote": "",
+        "photo": "./assets/places/Temple%20of%20Debod/section3.png"
+      },
+      {
+        "title": "",
+        "body": "",
+        "quote": "",
+        "photo": "./assets/places/Temple%20of%20Debod/section4.png"
+      },
+      {
+        "title": "",
+        "body": "",
+        "quote": "",
+        "photo": "./assets/places/Temple%20of%20Debod/section5.png"
+      },
+      {
+        "title": "",
+        "body": "",
+        "quote": "",
+        "photo": "./assets/places/Temple%20of%20Debod/section6.png"
+      }
+    ]
+  },
+  "Lhardy Restaurante": {
+    "title": "Lhardy Restaurante",
+    "introduction": "Lhardy Restaurante 是馬德里最具歷史感與代表性的餐廳之一。這裡不只是一間餐廳，也像是一座保存城市記憶的歷史空間，讓人透過味覺、裝潢與服務方式，感受老馬德里的優雅氣氛。",
+    "cover": "./assets/places/Lhardy%20Restaurante/cover.jpg",
+    "sections": [
+      {
+        "title": "基本介紹",
+        "body": "Lhardy Restaurante 位於馬德里市中心的 **Carrera de San Jerónimo**，距離太陽門廣場不遠。它創立於十九世紀，是馬德里傳統高級餐飲文化的重要象徵。\n\n這裡不只是一間餐廳，也像是一座保存城市記憶的歷史空間，讓人可以透過味覺、裝潢與服務方式，感受老馬德里的優雅氣氛。",
+        "quote": "",
+        "photo": "./assets/places/Lhardy%20Restaurante/section1.png"
+      },
+      {
+        "title": "歷史背景",
+        "body": "Lhardy 創立於十九世紀上半葉，見證了馬德里從傳統王都逐漸轉變為現代都市的過程。當時的餐廳、咖啡館與沙龍，不只是用餐場所，也是政治人物、作家、藝術家、貴族與知識分子交流思想的社交空間。\n\nLhardy 因地理位置優越，又具有精緻的法式與西班牙餐飲風格，很快成為馬德里上流社會與文化圈的重要聚會地點。",
+        "quote": "",
+        "photo": ""
+      },
+      {
+        "title": "建築與室內氛圍",
+        "body": "走進 Lhardy，最吸引人的並不只是菜單，而是它濃厚的古典氣息。店內保留了木質櫃檯、鏡面裝飾、銀器、傳統餐具與典雅的室內設計，整體氛圍像是一座十九世紀的城市沙龍。\n\n燈光、家具與服務節奏都帶有老派歐洲餐廳的儀式感，讓客人彷彿暫時離開現代馬德里，進入一個更緩慢、更講究禮儀的時代。",
+        "quote": "",
+        "photo": ""
+      },
+      {
+        "title": "美食特色",
+        "body": "Lhardy 最著名的料理是 **Cocido Madrileño**，也就是馬德里燉菜。這道菜通常以鷹嘴豆、蔬菜、肉類、香腸與高湯組成。傳統吃法會分成幾個階段：先喝濃郁的湯，再享用鷹嘴豆與蔬菜，最後品嚐肉類。\n\n這道菜原本帶有家常與庶民色彩，但在 Lhardy 被提升成一種精緻而有儀式感的餐飲體驗。餐廳也以冷盤、肉派、甜點、熱湯與傳統西班牙菜聞名。",
+        "quote": "",
+        "photo": ""
+      },
+      {
+        "title": "文化意義",
+        "body": "Lhardy 的重要性不只在於它歷史悠久，更在於它見證了馬德里的政治、文學與社交生活。許多重要人物曾在這類餐廳中聚會、討論、談判或交流觀點，因此 Lhardy 可說是馬德里公共生活的一部分。\n\n它代表的是一種城市文化：用餐不只是滿足味覺，也是一種社交、身分與文化品味的展現。",
+        "quote": "",
+        "photo": ""
+      },
+      {
+        "title": "總結",
+        "body": "Lhardy Restaurante 是一間能夠「吃到歷史」的餐廳。它結合了十九世紀馬德里的優雅、政治與文學記憶，以及西班牙傳統料理的深厚味道。",
+        "quote": "對旅人而言，這裡不只是用餐地點，而是一扇通往老馬德里的門；一碗湯、一份燉菜、一件銀器，甚至一面古老鏡子，都在訴說這座城市的故事。",
+        "photo": ""
+      }
+    ]
+  }
+}
