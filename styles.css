@@ -332,17 +332,24 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   overscroll-behavior: contain;
 }
 .article-section.slide-in-right {
-  animation: sectionFromRight .58s cubic-bezier(.22,.61,.36,1) both;
+  --section-shift: 2.25rem;
 }
 .article-section.slide-in-left {
-  animation: sectionFromLeft .58s cubic-bezier(.22,.61,.36,1) both;
+  --section-shift: -2.25rem;
 }
-@keyframes sectionFromRight {
-  from { opacity: 0; transform: translateX(3rem); }
+.article-section.section-enter { --section-shift: 0; }
+.article-section.is-active:is(.section-enter, .slide-in-right, .slide-in-left) .section-photo {
+  animation: graphicReveal .52s cubic-bezier(.22,.61,.36,1) both;
+}
+.article-section.is-active:is(.section-enter, .slide-in-right, .slide-in-left) .section-copy {
+  animation: copyReveal .46s cubic-bezier(.22,.61,.36,1) .38s both;
+}
+@keyframes graphicReveal {
+  from { opacity: 0; transform: translateX(var(--section-shift)) scale(.985); }
   to { opacity: 1; transform: none; }
 }
-@keyframes sectionFromLeft {
-  from { opacity: 0; transform: translateX(-3rem); }
+@keyframes copyReveal {
+  from { opacity: 0; transform: translateY(1.25rem); }
   to { opacity: 1; transform: none; }
 }
 .section-photo {
@@ -442,8 +449,8 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   color: white;
   font-weight: 800;
   cursor: pointer;
+  width: 100%;
 }
-.section-nav-button:last-child { justify-self: end; }
 .section-nav-button:disabled { border-color: var(--line); background: var(--paper); color: #989c98; cursor: default; }
 .section-progress { margin: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
 .section-progress strong { color: var(--green); }

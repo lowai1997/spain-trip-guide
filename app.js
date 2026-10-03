@@ -403,7 +403,7 @@ function setupSectionReader() {
     if (index < 0 || index >= sections.length || index === current) return;
     const outgoing = sections[current];
     const incoming = sections[index];
-    outgoing.className = outgoing.className.replace(/\s(is-active|slide-in-left|slide-in-right)/g, "");
+    outgoing.className = outgoing.className.replace(/\s(is-active|section-enter|slide-in-left|slide-in-right)/g, "");
     outgoing.setAttribute("aria-hidden", "true");
     current = index;
     incoming.classList.add("is-active", "is-visible", direction > 0 ? "slide-in-right" : "slide-in-left");
@@ -416,7 +416,7 @@ function setupSectionReader() {
 
   previous.disabled = true;
   next.disabled = sections.length === 1;
-  sections[0].classList.add("is-visible");
+  sections[0].classList.add("is-visible", "section-enter");
   previous.addEventListener("click", () => showSection(current - 1, -1));
   next.addEventListener("click", () => showSection(current + 1, 1));
   reader.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
