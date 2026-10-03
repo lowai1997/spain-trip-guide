@@ -394,7 +394,6 @@ function setupSectionReader() {
   const sections = [...reader.querySelectorAll(".article-section")];
   if (!sections.length) return;
   let current = 0;
-  let touchStartX = 0;
   const progress = reader.querySelector(".section-progress strong");
   const previous = reader.querySelector("[data-section-nav='previous']");
   const next = reader.querySelector("[data-section-nav='next']");
@@ -419,12 +418,6 @@ function setupSectionReader() {
   sections[0].classList.add("is-visible", "section-enter");
   previous.addEventListener("click", () => showSection(current - 1, -1));
   next.addEventListener("click", () => showSection(current + 1, 1));
-  reader.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
-  reader.addEventListener("touchend", (event) => {
-    const distance = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(distance) < 55) return;
-    showSection(current + (distance < 0 ? 1 : -1), distance < 0 ? 1 : -1);
-  }, { passive: true });
   reader.tabIndex = 0;
   reader.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") showSection(current + 1, 1);
