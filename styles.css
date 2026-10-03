@@ -378,7 +378,7 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   height: 100%;
   min-height: 13.5rem;
   aspect-ratio: 3 / 2;
-  object-fit: cover;
+  object-fit: contain;
   transform: scale(1.06);
   transition: transform 1.25s cubic-bezier(.22,.61,.36,1);
 }
