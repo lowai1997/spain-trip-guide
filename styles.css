@@ -313,6 +313,8 @@ svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-
   border-top: 1px solid var(--line);
   outline: none;
   scroll-margin-top: calc(4.25rem + env(safe-area-inset-top));
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior-x: none;
 }
 .article-body {
   position: relative;
