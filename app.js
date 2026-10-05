@@ -207,6 +207,7 @@ const builtInArticles = {
 };
 
 let articles = builtInArticles;
+let siteSettings = {};
 
 function escapeHtml(value = "") {
   return value.replace(/[&<>"']/g, (character) => ({
@@ -261,13 +262,25 @@ function structuredArticle(article) {
 
 async function loadEditedContent() {
   try {
-    const response = await fetch("./data/content.json", { cache: "no-store" });
-    if (!response.ok) return;
-    const edited = await response.json();
+    const [contentResponse, settingsResponse] = await Promise.all([
+      fetch("./data/content.json", { cache: "no-store" }),
+      fetch("./data/settings.json", { cache: "no-store" })
+    ]);
+    if (!contentResponse.ok) return;
+    const edited = await contentResponse.json();
+    siteSettings = settingsResponse.ok ? await settingsResponse.json() : {};
+    const imageVersion = siteSettings.updatedAt ? `?v=${siteSettings.updatedAt}` : "";
+    if (siteSettings.homeCover) $("#homeCoverPhoto").src = `${siteSettings.homeCover}${imageVersion}`;
+    if (siteSettings.loginCover) $("#loginVisual").style.backgroundImage = `url("${siteSettings.loginCover}${imageVersion}")`;
     articles = { ...builtInArticles };
     Object.entries(edited).forEach(([name, article]) => {
       articles[name] = { ...article, content: structuredArticle(article) };
-      if (!places.some((place) => place.name === name) && article.meta) {
+      const existingPlace = places.find((place) => place.name === name);
+      if (existingPlace && article.meta) {
+        existingPlace.day = Number(article.meta.day) || existingPlace.day;
+        existingPlace.city = article.meta.city || existingPlace.city;
+        existingPlace.type = article.meta.type || existingPlace.type;
+      } else if (article.meta) {
         places.push({ name, day: Number(article.meta.day) || 1, city: article.meta.city || "Spain", type: article.meta.type || "Place" });
       }
     });
@@ -335,13 +348,15 @@ function render() {
   destinationGrid.innerHTML = visible.map((place) => {
     const index = places.indexOf(place);
     const colors = palette[index % palette.length];
-    const cardPhoto = articles[place.name]?.cover || `./assets/places/${photoName(place.name)}`;
+    const article = articles[place.name];
+    const cardPhoto = article?.cover || `./assets/places/${photoName(place.name)}`;
+    const cardTitle = article?.title || place.name;
     return `
       <button class="destination-card" type="button" data-index="${index}" style="--card-color:${colors[0]};--accent-color:${colors[1]}">
         <img src="${cardPhoto}" alt="" onerror="this.hidden=true" />
         <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
         <span class="card-meta">Day ${place.day} · ${place.city}</span>
-        <strong>${place.name}</strong>
+        <strong>${escapeHtml(cardTitle)}</strong>
         <span class="card-type">${place.type}</span>
       </button>`;
   }).join("");
